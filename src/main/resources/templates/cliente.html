@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clientes</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Menú</h2>
+        <ul>
+            <li><a th:href="@{/cliente}">Clientes</a></li>
+            <li><a th:href="@{/editor}">Editores</a></li>
+            <li><a th:href="@{/libro}">Libros</a></li>
+            <li><a th:href="@{/autor}">Autores</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>Lista de Clientes</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cliente : ${clientes}">
+                    <td th:text="${cliente.id}"></td>
+                    <td th:text="${cliente.nombre}"></td>
+                    <td>
+                        <a th:href="@{/cliente/editar/{id}(id=${cliente.id})}">Editar</a> |
+                        <a th:href="@{/cliente/eliminar/{id}(id=${cliente.id})}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Nuevo Cliente</h2>
+        <form th:action="@{/cliente/guardar}" th:object="${nuevoCliente}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" th:field="*{nombre}" required />
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</body>
+</html>

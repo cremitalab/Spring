@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Autores</title>
+</head>
+<body>
+    <h1>Lista de Autores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="autor : ${autores}">
+                <td th:text="${autor.id}"></td>
+                <td th:text="${autor.nombre}"></td>
+                <td>
+                    <a th:href="@{/autor/editar/{id}(id=${autor.id})}">Editar</a> |
+                    <a th:href="@{/autor/eliminar/{id}(id=${autor.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Nuevo Autor</h2>
+    <form th:action="@{/autor/guardar}" th:object="${nuevoautor}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" th:field="*{nombre}" required />
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>
